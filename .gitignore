@@ -10,6 +10,9 @@ assets/example1/results
 assets/davis_eval
 assets/*/results
 *gradio*
+HuggingFace/*
+.DS_Store
+
 # 
 models/monoD/zoeDepth/ckpts/*
 models/monoD/depth_anything/ckpts/*
