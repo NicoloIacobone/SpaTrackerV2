@@ -39,7 +39,8 @@ if __name__ == "__main__":
     fps = int(args.fps)
     mask_dir = args.data_dir + f"/{args.video_name}.png"
     
-    vggt4track_model = VGGT4Track.from_pretrained("Yuxihenry/SpatialTrackerV2_Front")
+    # vggt4track_model = VGGT4Track.from_pretrained("Yuxihenry/SpatialTrackerV2_Front")
+    vggt4track_model = VGGT4Track.from_pretrained("HuggingFace/SpatialTrackerV2_Front", local_files_only=True)
     vggt4track_model.eval()
     vggt4track_model = vggt4track_model.to("cuda")
 
@@ -102,9 +103,11 @@ if __name__ == "__main__":
     # cfg.model.track_num = args.vo_points
     # print(f"Downloading model from HuggingFace: {cfg.ckpts}")
     if args.track_mode == "offline":
-        model = Predictor.from_pretrained("Yuxihenry/SpatialTrackerV2-Offline")
+        # model = Predictor.from_pretrained("Yuxihenry/SpatialTrackerV2-Offline")
+        model = Predictor.from_pretrained("HuggingFace/SpatialTrackerV2-Offline", local_files_only=True)
     else:
-        model = Predictor.from_pretrained("Yuxihenry/SpatialTrackerV2-Online")
+        # model = Predictor.from_pretrained("Yuxihenry/SpatialTrackerV2-Online")
+        model = Predictor.from_pretrained("HuggingFace/SpatialTrackerV2-Online", local_files_only=True)
 
     # config the model; the track_num is the number of points in the grid
     model.spatrack.track_num = args.vo_points
