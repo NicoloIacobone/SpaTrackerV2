@@ -103,11 +103,18 @@ if __name__ == "__main__":
     # cfg.model.track_num = args.vo_points
     # print(f"Downloading model from HuggingFace: {cfg.ckpts}")
     if args.track_mode == "offline":
-        # model = Predictor.from_pretrained("Yuxihenry/SpatialTrackerV2-Offline")
-        model = Predictor.from_pretrained("HuggingFace/SpatialTrackerV2-Offline", local_files_only=True)
+        model_path = "HuggingFace/SpatialTrackerV2-Offline"
+        try:
+            model = Predictor.from_pretrained(model_path, local_files_only=True)
+        except Exception:
+            # Fallback: try to download from Yuxihenry if not found locally
+            model = Predictor.from_pretrained("Yuxihenry/SpatialTrackerV2-Offline")
     else:
-        # model = Predictor.from_pretrained("Yuxihenry/SpatialTrackerV2-Online")
-        model = Predictor.from_pretrained("HuggingFace/SpatialTrackerV2-Online", local_files_only=True)
+        model_path = "HuggingFace/SpatialTrackerV2-Online"
+        try:
+            model = Predictor.from_pretrained(model_path, local_files_only=True)
+        except Exception:
+            model = Predictor.from_pretrained("Yuxihenry/SpatialTrackerV2-Online")
 
     # config the model; the track_num is the number of points in the grid
     model.spatrack.track_num = args.vo_points
