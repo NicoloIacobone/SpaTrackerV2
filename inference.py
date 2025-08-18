@@ -1,3 +1,4 @@
+print("Loading libraries...")
 import pycolmap
 from models.SpaTrackV2.models.predictor import Predictor
 import yaml
@@ -20,6 +21,7 @@ import decord
 from models.SpaTrackV2.models.vggt4track.models.vggt_moe import VGGT4Track
 from models.SpaTrackV2.models.vggt4track.utils.load_fn import preprocess_image
 from models.SpaTrackV2.models.vggt4track.utils.pose_enc import pose_encoding_to_extri_intri
+print("Libraries loaded.")
 
 def parse_args():
     parser = argparse.ArgumentParser()
