@@ -33,6 +33,8 @@ prev_version
 spat_ceres
 wandb
 *.log
+*.err
+*.out
 seg_target.py
 
 infer_cam.py
