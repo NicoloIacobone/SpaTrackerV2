@@ -35,7 +35,7 @@ def parse_args():
     parser = argparse.ArgumentParser()
     parser.add_argument("--track_mode", type=str, default="offline")
     parser.add_argument("--data_type", type=str, default="RGB")
-    parser.add_argument("--data_dir", type=str, default="/cluster/work/igp_psr/niacobone/examples/test_recursive")
+    parser.add_argument("--data_dir", type=str, default="assets/example0")
     # parser.add_argument("--video_name", type=str, default="snowboard")
     parser.add_argument("--grid_size", type=int, default=10)
     parser.add_argument("--vo_points", type=int, default=756)
@@ -56,14 +56,18 @@ if __name__ == "__main__":
         model_path = "HuggingFace/SpatialTrackerV2-Offline"
         try:
             model = Predictor.from_pretrained(model_path, local_files_only=True)
+            print(f"Loaded model from local files: {model_path}")
         except Exception:
             # Fallback: try to download from Yuxihenry if not found locally
+            print(f"Local model not found. Downloading from Yuxihenry/SpatialTrackerV2-Offline")
             model = Predictor.from_pretrained("Yuxihenry/SpatialTrackerV2-Offline")
     else:
         model_path = "HuggingFace/SpatialTrackerV2-Online"
         try:
             model = Predictor.from_pretrained(model_path, local_files_only=True)
+            print(f"Loaded model from local files: {model_path}")
         except Exception:
+            print(f"Local model not found. Downloading from Yuxihenry/SpatialTrackerV2-Online")
             model = Predictor.from_pretrained("Yuxihenry/SpatialTrackerV2-Online")
 
     # config the model; the track_num is the number of points in the grid
