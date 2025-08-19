@@ -22,7 +22,7 @@
 #SBATCH --cpus-per-task=8
 #
 # Specify number of required GPUs.
-#SBATCH --gpus=rtx_4090:4
+#SBATCH --gpus=rtx_4090:2
 
 echo "=== Job starting on $(hostname) at $(date) ==="
 # DATE_VAR=$(date +%Y%m%d%H%M%S)
@@ -31,11 +31,11 @@ echo "=== Job starting on $(hostname) at $(date) ==="
 # export REPO="/cluster/work/igp_psr/niacobone/SpaTrackerV2"
 
 # Load modules.
-module load stack/2024-06 python/3.11 cuda/12.4 eth_proxy
+module load stack/2024-06 python/3.11
 echo "Loaded modules: $(module list 2>&1)"
 
 # Activate virtual environment for SpatialTrackerV2.
-source /cluster/work/igp_psr/niacobone/SpaTrackerV2/SpaTrack2/bin/activate
+source /cluster/work/igp_psr/niacobone/SpaTrackerV2/myenv2/bin/activate
 echo "Activated Python venv: $(which python)"
 
 
