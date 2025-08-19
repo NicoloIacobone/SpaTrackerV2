@@ -12,8 +12,7 @@ assets/*/results
 *gradio*
 HuggingFace/*
 .DS_Store
-myenv/
-myenv_cuda/
+myenv*/
 # 
 models/monoD/zoeDepth/ckpts/*
 models/monoD/depth_anything/ckpts/*
