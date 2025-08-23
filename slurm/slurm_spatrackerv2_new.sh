@@ -67,6 +67,8 @@ if [ ! -d "${JOB_SCRATCH_DIR}" ]; then
     # Copiamo i dati di input in una sottocartella 'data' per mantenere l'ordine
     rsync -a --info=progress2 "${DATA_WORK_DIR}/" "${JOB_SCRATCH_DIR}/data/"
     echo "Copia completata."
+else
+    echo "La directory di lavoro temporanea esiste già: ${JOB_SCRATCH_DIR}"
 fi
 
 
@@ -79,7 +81,7 @@ cd "${JOB_SCRATCH_DIR}"
 echo "Directory di lavoro attuale: $(pwd)"
 
 # --- 5. Carica i moduli del cluster ---
-module load stack/2024-06 python/3.11
+module load stack/2024-06 python/3.11 eth_proxy
 echo "Moduli caricati: $(module list 2>&1)"
 
 # --- 6. Prepara ed attiva l'ambiente virtuale ---
