@@ -5,34 +5,26 @@ SpaTrackerV2, which is an unified model to estimate 'intrinsic',
 
 Contact: DM yuxixiao@zju.edu.cn
 """
-import time
-
-def timed_import(module_name, import_statement):
-    start = time.time()
-    exec(import_statement, globals())
-    end = time.time()
-    print(f"Imported {module_name} in {end - start:.3f} seconds.")
-
-timed_import("os", "import os")
-timed_import("numpy", "import numpy as np")
-timed_import("typing", "from typing import Literal, Union, List, Tuple, Dict")
-timed_import("cv2", "import cv2")
-timed_import("torch", "import torch")
-timed_import("torch.nn", "import torch.nn as nn")
-timed_import("torch.nn.functional", "import torch.nn.functional as F")
-timed_import("huggingface_hub", "from huggingface_hub import PyTorchModelHubMixin")
-timed_import("einops", "from einops import rearrange")
-timed_import("DepthAnythingV2", "from models.monoD.depth_anything_v2.dpt import DepthAnythingV2")
-timed_import("MoGeModel", "from models.moge.model.v1 import MoGeModel")
-timed_import("copy", "import copy")
-timed_import("functools.partial", "from functools import partial")
-timed_import("TrackRefiner3D", "from models.SpaTrackV2.models.tracker3D.TrackRefiner import TrackRefiner3D")
-timed_import("kornia", "import kornia")
-timed_import("sample_features5d", "from models.SpaTrackV2.utils.model_utils import sample_features5d")
-timed_import("utils3d", "import utils3d")
-timed_import("depth_to_points_colmap, get_nth_visible_time_index", "from models.SpaTrackV2.models.tracker3D.spatrack_modules.utils import depth_to_points_colmap, get_nth_visible_time_index")
-timed_import("pose_enc2mat, matrix_to_quaternion, get_track_points, normalize_rgb", "from models.SpaTrackV2.models.utils import pose_enc2mat, matrix_to_quaternion, get_track_points, normalize_rgb")
-timed_import("random", "import random")
+import os
+import numpy as np
+from typing import Literal, Union, List, Tuple, Dict
+import cv2
+import torch
+from huggingface_hub import PyTorchModelHubMixin
+from einops import rearrange
+from models.monoD.depth_anything_v2.dpt import DepthAnythingV2
+from models.moge.model.v1 import MoGeModel
+import copy
+from functools import partial
+from models.SpaTrackV2.models.tracker3D.TrackRefiner import TrackRefiner3D
+import kornia
+from models.SpaTrackV2.utils.model_utils import sample_features5d
+import utils3d
+from models.SpaTrackV2.models.tracker3D.spatrack_modules.utils import depth_to_points_colmap, get_nth_visible_time_index
+from models.SpaTrackV2.models.utils import pose_enc2mat, matrix_to_quaternion, get_track_points, normalize_rgb
+import random
+import torch.nn as nn
+import torch.nn.functional as F
 
 class SpaTrack2(nn.Module, PyTorchModelHubMixin):
     def __init__(
@@ -56,8 +48,6 @@ class SpaTrack2(nn.Module, PyTorchModelHubMixin):
         #NOTE: initial the base model
         base_cfg = copy.deepcopy(backbone_cfg)
         backbone_ckpt_dir = base_cfg.pop('ckpt_dir', None)
-        print(f"backbone_ckpt_dir: {backbone_ckpt_dir}")
-        raise Exception
 
         super(SpaTrack2, self).__init__()
         if moge_as_base:

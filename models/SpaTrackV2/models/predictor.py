@@ -4,27 +4,18 @@
 # This source code is licensed under the license found in the
 # LICENSE file in the root directory of this source tree.
 
-import time
-
-def timed_import(module_name, import_statement):
-    start = time.time()
-    exec(import_statement, globals())
-    end = time.time()
-    print(f"Imported {module_name} in {end - start:.3f} seconds.")
-
-print("Loading libraries of predictor.py")
-timed_import("torch", "import torch")
-timed_import("torch.nn.functional", "import torch.nn.functional as F")
-timed_import("tqdm", "from tqdm import tqdm")
-timed_import("SpaTrack2", "from models.SpaTrackV2.models.SpaTrack import SpaTrack2")
-timed_import("typing.Literal", "from typing import Literal")
-timed_import("numpy", "import numpy as np")
-timed_import("pathlib.Path", "from pathlib import Path")
-timed_import("typing.Union_Optional", "from typing import Union, Optional")
-timed_import("cv2", "import cv2")
-timed_import("os", "import os")
-timed_import("decord", "import decord")
-timed_import("huggingface_hub.PyTorchModelHubMixin", "from huggingface_hub import PyTorchModelHubMixin  # used for model hub")
+import torch
+from tqdm import tqdm
+from models.SpaTrackV2.models.SpaTrack import SpaTrack2
+from typing import Literal
+import numpy as np
+from pathlib import Path
+from typing import Union, Optional
+import cv2
+import os
+import decord
+import torch.nn.functional as F
+from huggingface_hub import PyTorchModelHubMixin  # used for model hub
 
 class Predictor(torch.nn.Module, PyTorchModelHubMixin):
     def __init__(self, args=None):

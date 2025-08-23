@@ -1,34 +1,26 @@
-import time
-
-def timed_import(module_name, import_statement):
-    start = time.time()
-    exec(import_statement, globals())
-    end = time.time()
-    print(f"Imported {module_name} in {end - start:.3f} seconds.")
-
 print("Loading libraries...")
-timed_import("pycolmap", "import pycolmap")
-timed_import("Predictor", "from models.SpaTrackV2.models.predictor import Predictor")
-timed_import("yaml", "import yaml")
-timed_import("easydict", "import easydict")
-timed_import("os", "import os")
-timed_import("numpy", "import numpy as np")
-timed_import("cv2", "import cv2")
-timed_import("torch", "import torch")
-timed_import("torchvision.transforms as T", "import torchvision.transforms as T")
-timed_import("PIL.Image", "from PIL import Image")
-timed_import("io", "import io")
-timed_import("moviepy.editor as mp", "import moviepy.editor as mp")
-timed_import("Visualizer", "from models.SpaTrackV2.utils.visualizer import Visualizer")
-timed_import("tqdm", "import tqdm")
-timed_import("get_points_on_a_grid", "from models.SpaTrackV2.models.utils import get_points_on_a_grid")
-timed_import("glob", "import glob")
-timed_import("rich.print", "from rich import print")
-timed_import("argparse", "import argparse")
-timed_import("decord", "import decord")
-timed_import("VGGT4Track", "from models.SpaTrackV2.models.vggt4track.models.vggt_moe import VGGT4Track")
-timed_import("preprocess_image", "from models.SpaTrackV2.models.vggt4track.utils.load_fn import preprocess_image")
-timed_import("pose_encoding_to_extri_intri", "from models.SpaTrackV2.models.vggt4track.utils.pose_enc import pose_encoding_to_extri_intri")
+import pycolmap
+from models.SpaTrackV2.models.predictor import Predictor
+import yaml
+import easydict
+import os
+import numpy as np
+import cv2
+import torch
+from PIL import Image
+import io
+from models.SpaTrackV2.utils.visualizer import Visualizer
+import tqdm
+from models.SpaTrackV2.models.utils import get_points_on_a_grid
+import glob
+from rich import print
+import argparse
+import decord
+from models.SpaTrackV2.models.vggt4track.models.vggt_moe import VGGT4Track
+from models.SpaTrackV2.models.vggt4track.utils.load_fn import preprocess_image
+from models.SpaTrackV2.models.vggt4track.utils.pose_enc import pose_encoding_to_extri_intri
+import torchvision.transforms as T
+import moviepy.editor as mp
 print("Libraries loaded.")
 
 def parse_args():
