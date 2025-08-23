@@ -35,7 +35,7 @@ module load stack/2024-06 python/3.11
 echo "Loaded modules: $(module list 2>&1)"
 
 # Activate virtual environment for SpatialTrackerV2.
-source /cluster/work/igp_psr/niacobone/SpaTrackerV2/myenv2/bin/activate
+source /cluster/work/igp_psr/niacobone/SpaTrackerV2/myenv/bin/activate
 echo "Activated Python venv: $(which python)"
 
 
