@@ -1,7 +1,7 @@
 #!/bin/bash
 #
 # Specify job name.
-#SBATCH --job-name=spatrackerv2
+#SBATCH --job-name=spatrackerv2_scratch
 #
 # Specify output file.
 #SBATCH --output=spatrackerv2_%j.log
@@ -28,21 +28,21 @@ echo "=== Job starting on $(hostname) at $(date) ==="
 # DATE_VAR=$(date +%Y%m%d%H%M%S)
 
 # Specify directories.
-# export REPO="/cluster/work/igp_psr/niacobone/SpaTrackerV2"
+# export REPO="/cluster/work/"
 
 # Load modules.
 module load stack/2024-06 python/3.11
 echo "Loaded modules: $(module list 2>&1)"
 
 # Activate virtual environment for SpatialTrackerV2.
-source /cluster/work/igp_psr/niacobone/SpaTrackerV2/myenv2/bin/activate
+source /cluster/scratch/niacobone/SpaTrackerV2/myenv/bin/activate
 echo "Activated Python venv: $(which python)"
 
 
 # Execute
-cd /cluster/work/igp_psr/niacobone/SpaTrackerV2
+cd /cluster/scratch/niacobone/SpaTrackerV2
 echo "Starting SpaTrackerV2 inference..."
-python inference.py --data_dir="/cluster/work/igp_psr/niacobone/examples/test_recursive"
+python inference.py --data_dir="/cluster/scratch/niacobone/examples/test_recursive"
 
 echo "=== Job finished at $(date) ==="
 start_time=${SLURM_JOB_START_TIME:-$(date +%s)}
