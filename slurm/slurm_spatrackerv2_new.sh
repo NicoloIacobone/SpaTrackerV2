@@ -5,7 +5,7 @@
 #==============================================================================
 #
 # Nome del job.
-#SBATCH --job-name=spatrackerv2_scratch
+#SBATCH --job-name=spatrackerv2
 #
 # File di output per i log.
 #SBATCH --output=spatrackerv2_%j.log
@@ -27,6 +27,9 @@
 #
 # Numero di GPU richieste.
 #SBATCH --gpus=rtx_4090:2
+#
+# Specify disk limit on local scratch.
+#SBATCH --tmp=500000
 
 #==============================================================================
 #                SETUP E DEFINIZIONE DEI PERCORSI (MODIFICA QUI)
@@ -49,20 +52,22 @@ RESULTS_WORK_DIR="${PROJECT_WORK_DIR}/results"
 
 
 # --- 2. Crea uno spazio di lavoro temporaneo sul disco veloce ---
-# SLURM_SCRATCH è una variabile d'ambiente che punta al tuo disco scratch.
-# Usiamo l'ID del job per creare una cartella unica.
-JOB_SCRATCH_DIR="${SCRATCH}/spatracker_job_${SLURM_JOB_ID}"
-echo "Creazione della directory di lavoro temporanea in: ${JOB_SCRATCH_DIR}"
-mkdir -p "${JOB_SCRATCH_DIR}"
+# SLURM è una variabile d'ambiente che punta al tuo disco scratch.
+JOB_SCRATCH_DIR="${SCRATCH}/SpaTrackerV2"
+# controlla che la cartella esista, se non esiste esegui i due step successivi
+if [ ! -d "${JOB_SCRATCH_DIR}" ]; then
+    mkdir -p "${JOB_SCRATCH_DIR}"
+    echo "Creata la directory di lavoro temporanea in: ${JOB_SCRATCH_DIR}"
 
-# --- 3. Copia le risorse necessarie su SCRATCH ---
-echo "Copia del progetto e dei dati su SCRATCH..."
-# Usiamo rsync per copiare la cartella del progetto (che contiene myenv2.tar.gz)
-rsync -a --info=progress2 "${PROJECT_WORK_DIR}/" "${JOB_SCRATCH_DIR}/"
+    # --- 3. Copia le risorse necessarie su SCRATCH ---
+    echo "Copia del progetto e dei dati su SCRATCH..."
+    # Usiamo rsync per copiare la cartella del progetto (che contiene myenv2.tar.gz)
+    rsync -a --info=progress2 "${PROJECT_WORK_DIR}/" "${JOB_SCRATCH_DIR}/"
 
-# Copiamo i dati di input in una sottocartella 'data' per mantenere l'ordine
-rsync -a --info=progress2 "${DATA_WORK_DIR}/" "${JOB_SCRATCH_DIR}/data/"
-echo "Copia completata."
+    # Copiamo i dati di input in una sottocartella 'data' per mantenere l'ordine
+    rsync -a --info=progress2 "${DATA_WORK_DIR}/" "${JOB_SCRATCH_DIR}/data/"
+    echo "Copia completata."
+fi
 
 
 #==============================================================================
@@ -78,11 +83,15 @@ module load stack/2024-06 python/3.11
 echo "Moduli caricati: $(module list 2>&1)"
 
 # --- 6. Prepara ed attiva l'ambiente virtuale ---
-echo "Estrazione dell'ambiente virtuale (da myenv2.tar.gz)..."
-# Questo è velocissimo perché avviene da SSD a SSD
-tar -xzf myenv2.tar.gz
+if [ ! -d "myenv" ]; then
+    echo "Estrazione dell'ambiente virtuale (da myenv.tar.gz)..."
+    # Questo è velocissimo perché avviene da SSD a SSD
+    tar -xzf myenv.tar.gz
+else
+    echo "La cartella myenv esiste già, estrazione saltata."
+fi
 echo "Attivazione dell'ambiente virtuale..."
-source myenv2/bin/activate
+source myenv/bin/activate
 echo "Venv Python attivato: $(which python)"
 
 # --- 7. Esegui lo script Python ---
