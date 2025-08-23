@@ -118,7 +118,7 @@ FINAL_RESULTS_DIR="${RESULTS_WORK_DIR}/${SLURM_JOB_ID}"
 echo "Copia dei risultati in: ${FINAL_RESULTS_DIR}"
 mkdir -p "${FINAL_RESULTS_DIR}"
 # Copiamo il contenuto della cartella di output da scratch alla destinazione permanente
-rsync -a --info=progress2 ./output/ "${FINAL_RESULTS_DIR}/"
+rsync -a --info=progress2 /output/ "${FINAL_RESULTS_DIR}/"
 
 # --- 9. Pulisci la directory temporanea su SCRATCH ---
 echo "Pulizia della directory temporanea su SCRATCH..."
