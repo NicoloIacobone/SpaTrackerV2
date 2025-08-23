@@ -57,7 +57,7 @@ mkdir -p "${JOB_SCRATCH_DIR}"
 
 # --- 3. Copia le risorse necessarie su SCRATCH ---
 echo "Copia del progetto e dei dati su SCRATCH..."
-# Usiamo rsync per copiare la cartella del progetto (che contiene venv2.tar.gz)
+# Usiamo rsync per copiare la cartella del progetto (che contiene myenv2.tar.gz)
 rsync -a --info=progress2 "${PROJECT_WORK_DIR}/" "${JOB_SCRATCH_DIR}/"
 
 # Copiamo i dati di input in una sottocartella 'data' per mantenere l'ordine
@@ -78,9 +78,9 @@ module load stack/2024-06 python/3.11
 echo "Moduli caricati: $(module list 2>&1)"
 
 # --- 6. Prepara ed attiva l'ambiente virtuale ---
-echo "Estrazione dell'ambiente virtuale (da venv2.tar.gz)..."
+echo "Estrazione dell'ambiente virtuale (da myenv2.tar.gz)..."
 # Questo è velocissimo perché avviene da SSD a SSD
-tar -xzf venv2.tar.gz
+tar -xzf myenv2.tar.gz
 echo "Attivazione dell'ambiente virtuale..."
 source myenv2/bin/activate
 echo "Venv Python attivato: $(which python)"
