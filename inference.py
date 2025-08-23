@@ -48,27 +48,35 @@ if __name__ == "__main__":
     fps = int(args.fps)
     
     # Load vggt4track model once
-    vggt4track_model = VGGT4Track.from_pretrained("HuggingFace/SpatialTrackerV2_Front", local_files_only=True)
+    # vggt4track_model = VGGT4Track.from_pretrained("HuggingFace/SpatialTrackerV2_Front", local_files_only=True)
+    # vggt4track_model.eval()
+    # vggt4track_model = vggt4track_model.to("cuda")
+    vggt4track_model = VGGT4Track.from_pretrained("Yuxihenry/SpatialTrackerV2_Front")
     vggt4track_model.eval()
     vggt4track_model = vggt4track_model.to("cuda")
 
+    # if args.track_mode == "offline":
+    #     model_path = "HuggingFace/SpatialTrackerV2-Offline"
+    #     try:
+    #         model = Predictor.from_pretrained(model_path, local_files_only=True)
+    #         print(f"Loaded model from local files: {model_path}")
+    #     except Exception:
+    #         # Fallback: try to download from Yuxihenry if not found locally
+    #         print(f"Local model not found. Downloading from Yuxihenry/SpatialTrackerV2-Offline")
+    #         model = Predictor.from_pretrained("Yuxihenry/SpatialTrackerV2-Offline")
+    # else:
+    #     model_path = "HuggingFace/SpatialTrackerV2-Online"
+    #     try:
+    #         model = Predictor.from_pretrained(model_path, local_files_only=True)
+    #         print(f"Loaded model from local files: {model_path}")
+    #     except Exception:
+    #         print(f"Local model not found. Downloading from Yuxihenry/SpatialTrackerV2-Online")
+    #         model = Predictor.from_pretrained("Yuxihenry/SpatialTrackerV2-Online")
+
     if args.track_mode == "offline":
-        model_path = "HuggingFace/SpatialTrackerV2-Offline"
-        try:
-            model = Predictor.from_pretrained(model_path, local_files_only=True)
-            print(f"Loaded model from local files: {model_path}")
-        except Exception:
-            # Fallback: try to download from Yuxihenry if not found locally
-            print(f"Local model not found. Downloading from Yuxihenry/SpatialTrackerV2-Offline")
-            model = Predictor.from_pretrained("Yuxihenry/SpatialTrackerV2-Offline")
+        model = Predictor.from_pretrained("Yuxihenry/SpatialTrackerV2-Offline")
     else:
-        model_path = "HuggingFace/SpatialTrackerV2-Online"
-        try:
-            model = Predictor.from_pretrained(model_path, local_files_only=True)
-            print(f"Loaded model from local files: {model_path}")
-        except Exception:
-            print(f"Local model not found. Downloading from Yuxihenry/SpatialTrackerV2-Online")
-            model = Predictor.from_pretrained("Yuxihenry/SpatialTrackerV2-Online")
+        model = Predictor.from_pretrained("Yuxihenry/SpatialTrackerV2-Online")
 
     # config the model; the track_num is the number of points in the grid
     model.spatrack.track_num = args.vo_points
