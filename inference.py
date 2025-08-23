@@ -82,10 +82,12 @@ if __name__ == "__main__":
 
     # Loop over all .mp4 files in data_dir
     video_files = glob.glob(os.path.join(args.data_dir, "*.mp4"))
+    print(f"Found {len(video_files)} video files in {args.data_dir}.")
     for vid_path in video_files:
         print(f"Processing video: {vid_path}")
         video_name = os.path.splitext(os.path.basename(vid_path))[0]
         out_dir = os.path.join(args.data_dir, "results", video_name)
+        print(f"Output directory: {out_dir}")
         os.makedirs(out_dir, exist_ok=True)
 
         mask_dir = os.path.join(args.data_dir, f"{video_name}.png")
