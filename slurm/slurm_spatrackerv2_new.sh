@@ -51,7 +51,7 @@ RESULTS_WORK_DIR="${PROJECT_WORK_DIR}/results"
 # --- 2. Crea uno spazio di lavoro temporaneo sul disco veloce ---
 # SLURM_SCRATCH è una variabile d'ambiente che punta al tuo disco scratch.
 # Usiamo l'ID del job per creare una cartella unica.
-JOB_SCRATCH_DIR="${SLURM_SCRATCH}/spatracker_job_${SLURM_JOB_ID}"
+JOB_SCRATCH_DIR="${SCRATCH}/spatracker_job_${SLURM_JOB_ID}"
 echo "Creazione della directory di lavoro temporanea in: ${JOB_SCRATCH_DIR}"
 mkdir -p "${JOB_SCRATCH_DIR}"
 
