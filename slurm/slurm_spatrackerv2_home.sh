@@ -42,7 +42,7 @@ echo "Activated Python venv: $(which python)"
 # Execute
 cd /cluster/home/niacobone/projects/SpaTrackerV2
 echo "Starting SpaTrackerV2 inference..."
-python inference.py --data_dir="/cluster/home/niacobone/examples/test_recursive"
+python inference.py --data_dir="/cluster/home/niacobone/projects/examples/test_recursive"
 
 echo "=== Job finished at $(date) ==="
 start_time=${SLURM_JOB_START_TIME:-$(date +%s)}
