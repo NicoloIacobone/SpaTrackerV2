@@ -62,7 +62,7 @@ if [ ! -d "${JOB_SCRATCH_DIR}" ]; then
     # --- 3. Copia le risorse necessarie su SCRATCH ---
     echo "Copia del progetto e dei dati su SCRATCH..."
     # Usiamo rsync per copiare la cartella del progetto (che contiene myenv2.tar.gz)
-    rsync -a --info=progress2 "${PROJECT_WORK_DIR}/" "${JOB_SCRATCH_DIR}/"
+    rsync -a --info=progress2 --exclude='myenv' "${PROJECT_WORK_DIR}/" "${JOB_SCRATCH_DIR}/"
 
     # Copiamo i dati di input in una sottocartella 'data' per mantenere l'ordine
     rsync -a --info=progress2 "${DATA_WORK_DIR}/" "${JOB_SCRATCH_DIR}/data/"
