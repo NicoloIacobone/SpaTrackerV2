@@ -13,6 +13,7 @@ assets/*/results
 HuggingFace/*
 .DS_Store
 myenv*/
+*.tar.gz
 # 
 models/monoD/zoeDepth/ckpts/*
 models/monoD/depth_anything/ckpts/*

@@ -27,11 +27,11 @@ def parse_args():
     parser = argparse.ArgumentParser()
     parser.add_argument("--track_mode", type=str, default="offline")
     parser.add_argument("--data_type", type=str, default="RGB")
-    parser.add_argument("--data_dir", type=str, default="assets/example0")
+    parser.add_argument("--data_dir", type=str, default="../examples/test_recursive")
     # parser.add_argument("--video_name", type=str, default="snowboard")
     parser.add_argument("--grid_size", type=int, default=10)
     parser.add_argument("--vo_points", type=int, default=756)
-    parser.add_argument("--fps", type=int, default=1)
+    parser.add_argument("--fps", type=int, default=2)
     return parser.parse_args()
 
 if __name__ == "__main__":
