@@ -21,6 +21,7 @@ from models.SpaTrackV2.models.vggt4track.utils.load_fn import preprocess_image
 from models.SpaTrackV2.models.vggt4track.utils.pose_enc import pose_encoding_to_extri_intri
 import torchvision.transforms as T
 import moviepy.editor as mp
+import gc
 print("Libraries loaded.")
 
 def parse_args():
@@ -211,3 +212,6 @@ if __name__ == "__main__":
             np.savez(os.path.join(out_dir, f'result.npz'), **data_npz_load)
 
             print(f"Results saved to {out_dir}.\nTo visualize them with tapip3d, run: [bold yellow]python tapip3d_viz.py {out_dir}/result.npz[/bold yellow]")
+
+            gc.collect()
+            torch.cuda.empty_cache()
