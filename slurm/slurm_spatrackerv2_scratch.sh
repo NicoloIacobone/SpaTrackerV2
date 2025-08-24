@@ -42,7 +42,11 @@ echo "Activated Python venv: $(which python)"
 # Execute
 cd /cluster/scratch/niacobone/SpaTrackerV2
 echo "Starting SpaTrackerV2 inference..."
-python inference.py
+for video in /cluster/work/igp_psr/niacobone/examples/*.mp4; do
+    video_name=$(basename "$video" .mp4)
+    echo "Processing video: $video_name"
+    python inference.py --video_name="$video_name"
+done
 
 echo "=== Job finished at $(date) ==="
 start_time=${SLURM_JOB_START_TIME:-$(date +%s)}
