@@ -28,7 +28,7 @@ def parse_args():
     parser = argparse.ArgumentParser()
     parser.add_argument("--track_mode", type=str, default="offline")
     parser.add_argument("--data_type", type=str, default="RGB")
-    parser.add_argument("--data_dir", type=str, default="/cluster/work/igp_psr/niacobone/examples")
+    parser.add_argument("--data_dir", type=str, default="/cluster/work/igp_psr/niacobone/examples/edge_case")
     parser.add_argument("--video_name", type=str, default="mari")
     parser.add_argument("--grid_size", type=int, default=10)
     parser.add_argument("--vo_points", type=int, default=756)
@@ -85,7 +85,7 @@ if __name__ == "__main__":
     vid_path = os.path.join(args.data_dir, args.video_name + ".mp4")
     print(f"Processing video: {vid_path}")
     video_name = args.video_name
-    out_dir = os.path.join(os.path.dirname(vid_path), "results", video_name)
+    out_dir = os.path.join(os.path.dirname(vid_path), "results/SpaTrackV2", video_name)
     print(f"Output directory: {out_dir}")
     os.makedirs(out_dir, exist_ok=True)
 
@@ -112,6 +112,7 @@ if __name__ == "__main__":
                 video_tensor = torch.from_numpy(video_reader.get_batch(range(len(video_reader))).asnumpy()).permute(0, 3, 1, 2)
                 video_tensor = video_tensor[::fps_try].float()
                 video_tensor = preprocess_image(video_tensor)[None]
+                print("video_tensor shape:", video_tensor.shape, "dtype:", video_tensor.dtype)
                 with torch.no_grad():
                     with torch.cuda.amp.autocast(dtype=torch.bfloat16):
                         predictions = vggt4track_model(video_tensor.cuda()/255)

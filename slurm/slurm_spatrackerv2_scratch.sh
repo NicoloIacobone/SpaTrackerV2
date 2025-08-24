@@ -13,7 +13,7 @@
 #SBATCH --open-mode=append
 #
 # Specify time limit.
-#SBATCH --time=00:15:00
+#SBATCH --time=01:00:00
 #
 # Specify number of tasks.
 #SBATCH --ntasks=1
@@ -42,7 +42,7 @@ echo "Activated Python venv: $(which python)"
 # Execute
 cd /cluster/scratch/niacobone/SpaTrackerV2
 echo "Starting SpaTrackerV2 inference..."
-for video in /cluster/work/igp_psr/niacobone/examples/*.mp4; do
+for video in /cluster/work/igp_psr/niacobone/examples/edge_case/*.mp4; do
     video_name=$(basename "$video" .mp4)
     echo "Processing video: $video_name"
     python inference.py --video_name="$video_name"
