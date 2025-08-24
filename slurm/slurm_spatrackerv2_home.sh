@@ -13,7 +13,7 @@
 #SBATCH --open-mode=append
 #
 # Specify time limit.
-#SBATCH --time=01:00:00
+#SBATCH --time=00:05:00
 #
 # Specify number of tasks.
 #SBATCH --ntasks=1
@@ -42,7 +42,7 @@ echo "Activated Python venv: $(which python)"
 # Execute
 cd /cluster/home/niacobone/projects/SpaTrackerV2
 echo "Starting SpaTrackerV2 inference..."
-python inference.py --data_dir="/cluster/home/niacobone/projects/examples/test_recursive"
+python inference.py
 
 echo "=== Job finished at $(date) ==="
 start_time=${SLURM_JOB_START_TIME:-$(date +%s)}
