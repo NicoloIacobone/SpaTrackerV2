@@ -22,10 +22,10 @@
 #SBATCH --cpus-per-task=4
 #
 # Specify memory limit per CPU core.
-#SBATCH --mem-per-cpu=32768
+#SBATCH --mem-per-cpu=65536
 #
 # Specify number of required GPUs.
-#SBATCH --gpus=rtx_4090:2
+#SBATCH --gpus=a100:1
 
 echo "=== Job starting on $(hostname) at $(date) ==="
 # DATE_VAR=$(date +%Y%m%d%H%M%S)
@@ -35,11 +35,11 @@ module load stack/2024-06 python/3.11
 echo "Loaded modules: $(module list 2>&1)"
 
 # Activate virtual environment for SpatialTrackerV2.
-source /cluster/work/igp_psr/niacobone/SpaTrackerV2/myenv/bin/activate
+source /cluster/scratch/niacobone/SpaTrackerV2/myenv/bin/activate
 echo "Activated Python venv: $(which python)"
 
 # Execute
-cd /cluster/work/igp_psr/niacobone/SpaTrackerV2
+cd /cluster/scratch/niacobone/SpaTrackerV2
 echo "Starting SpaTrackerV2 inference..."
 for video in /cluster/work/igp_psr/niacobone/examples/edge_case/*.mp4; do
     video_name=$(basename "$video" .mp4)

@@ -1,7 +1,7 @@
 #!/bin/bash
 #
 # Specify job name.
-#SBATCH --job-name=spatrackerv2_home
+#SBATCH --job-name=spatrackerv2_scratch
 #
 # Specify output file.
 #SBATCH --output=spatrackerv2_%j.log
@@ -13,7 +13,7 @@
 #SBATCH --open-mode=append
 #
 # Specify time limit.
-#SBATCH --time=00:15:00
+#SBATCH --time=00:30:00
 #
 # Specify number of tasks.
 #SBATCH --ntasks=1
@@ -22,16 +22,13 @@
 #SBATCH --cpus-per-task=4
 #
 # Specify memory limit per CPU core.
-#SBATCH --mem-per-cpu=8192
+#SBATCH --mem-per-cpu=32768
 #
 # Specify number of required GPUs.
 #SBATCH --gpus=rtx_4090:2
 
 echo "=== Job starting on $(hostname) at $(date) ==="
 # DATE_VAR=$(date +%Y%m%d%H%M%S)
-
-# Specify directories.
-# export REPO="/cluster/work/igp_psr/niacobone/SpaTrackerV2"
 
 # Load modules.
 module load stack/2024-06 python/3.11
@@ -41,11 +38,15 @@ echo "Loaded modules: $(module list 2>&1)"
 source /cluster/home/niacobone/projects/SpaTrackerV2/myenv/bin/activate
 echo "Activated Python venv: $(which python)"
 
-
 # Execute
 cd /cluster/home/niacobone/projects/SpaTrackerV2
 echo "Starting SpaTrackerV2 inference..."
-python inference.py
+for video in /cluster/work/igp_psr/niacobone/examples/edge_case/*.mp4; do
+    video_name=$(basename "$video" .mp4)
+    echo "Processing video: $video_name"
+    python inference.py --video_name="$video_name"
+    echo "----------------------------------"
+done
 
 echo "=== Job finished at $(date) ==="
 start_time=${SLURM_JOB_START_TIME:-$(date +%s)}

@@ -13,7 +13,7 @@
 #SBATCH --open-mode=append
 #
 # Specify time limit.
-#SBATCH --time=01:00:00
+#SBATCH --time=00:30:00
 #
 # Specify number of tasks.
 #SBATCH --ntasks=1
@@ -22,16 +22,13 @@
 #SBATCH --cpus-per-task=4
 #
 # Specify memory limit per CPU core.
-#SBATCH --mem-per-cpu=8192
+#SBATCH --mem-per-cpu=32768
 #
 # Specify number of required GPUs.
 #SBATCH --gpus=rtx_4090:2
 
 echo "=== Job starting on $(hostname) at $(date) ==="
 # DATE_VAR=$(date +%Y%m%d%H%M%S)
-
-# Specify directories.
-# export REPO="/cluster/work/"
 
 # Load modules.
 module load stack/2024-06 python/3.11
@@ -40,7 +37,6 @@ echo "Loaded modules: $(module list 2>&1)"
 # Activate virtual environment for SpatialTrackerV2.
 source /cluster/scratch/niacobone/SpaTrackerV2/myenv/bin/activate
 echo "Activated Python venv: $(which python)"
-
 
 # Execute
 cd /cluster/scratch/niacobone/SpaTrackerV2
