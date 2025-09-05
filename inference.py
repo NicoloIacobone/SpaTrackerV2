@@ -24,6 +24,23 @@ import moviepy.editor as mp
 import gc
 print("Libraries loaded.")
 
+def load_frames(image_folder):
+    """Carica tutte le immagini RGB in una cartella e restituisce un tensore torch (T, C, H, W) float32."""
+    frame_files = sorted([f for f in os.listdir(image_folder) if f.lower().endswith(('.png', '.jpg', '.jpeg'))])
+    frames = []
+    for filename in frame_files:
+        file_path = os.path.join(image_folder, filename)
+        img = cv2.imread(file_path)
+        if img is None:
+            continue
+        img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
+        frames.append(img)
+    if not frames:
+        raise RuntimeError(f"Nessuna immagine valida trovata in {image_folder}")
+    frames = np.stack(frames)  # (T, H, W, C)
+    frames = torch.from_numpy(frames).permute(0, 3, 1, 2).float()  # (T, C, H, W)
+    return frames
+
 def parse_args():
     parser = argparse.ArgumentParser()
     parser.add_argument("--track_mode", type=str, default="offline")
@@ -82,11 +99,17 @@ if __name__ == "__main__":
     grid_size = args.grid_size
 
     # Usa args.data_dir come path al singolo video
-    vid_path = os.path.join(args.data_dir, args.video_name + ".mp4")
+    # Determina se args.data_dir è una cartella o un file
+    if os.path.isdir(args.data_dir):
+        vid_path = os.path.join(args.data_dir, args.video_name)
+    else:
+        vid_path = os.path.join(args.data_dir, args.video_name + ".mp4")
     print(f"Processing video: {vid_path}")
+
     video_name = args.video_name
     out_dir = os.path.join(os.path.dirname(vid_path), "results/SpaTrackV2", video_name)
     print(f"Output directory: {out_dir}")
+    
     os.makedirs(out_dir, exist_ok=True)
 
     mask_dir = os.path.join(os.path.dirname(vid_path), f"{video_name}.png")
@@ -108,10 +131,16 @@ if __name__ == "__main__":
                 extrs = extrs[::fps_try]
                 unc_metric = None
             elif args.data_type == "RGB":
-                video_reader = decord.VideoReader(vid_path)
-                video_tensor = torch.from_numpy(video_reader.get_batch(range(len(video_reader))).asnumpy()).permute(0, 3, 1, 2)
-                video_tensor = video_tensor[::fps_try].float()
-                video_tensor = preprocess_image(video_tensor)[None]
+                # Se args.data_dir è una cartella, carica immagini; se è un file, carica video
+                if os.path.isdir(vid_path):
+                    video_tensor = load_frames(vid_path)
+                    video_tensor = video_tensor[::fps_try].float()
+                    video_tensor = preprocess_image(video_tensor)[None]
+                else:
+                    video_reader = decord.VideoReader(vid_path)
+                    video_tensor = torch.from_numpy(video_reader.get_batch(range(len(video_reader))).asnumpy()).permute(0, 3, 1, 2)
+                    video_tensor = video_tensor[::fps_try].float()
+                    video_tensor = preprocess_image(video_tensor)[None]
                 print("video_tensor shape:", video_tensor.shape, "dtype:", video_tensor.dtype)
                 with torch.no_grad():
                     with torch.cuda.amp.autocast(dtype=torch.bfloat16):
