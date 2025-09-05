@@ -45,7 +45,7 @@ def parse_args():
     parser = argparse.ArgumentParser()
     parser.add_argument("--track_mode", type=str, default="offline")
     parser.add_argument("--data_type", type=str, default="RGB")
-    parser.add_argument("--data_dir", type=str, default="/cluster/work/igp_psr/niacobone/examples/edge_case")
+    parser.add_argument("--data_dir", type=str, default="/cluster/work/igp_psr/niacobone/examples/kubric/movi_ab_worker")
     parser.add_argument("--video_name", type=str, default="mari")
     parser.add_argument("--grid_size", type=int, default=10)
     parser.add_argument("--vo_points", type=int, default=756)
