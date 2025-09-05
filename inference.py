@@ -109,7 +109,7 @@ if __name__ == "__main__":
     video_name = args.video_name
     out_dir = os.path.join(os.path.dirname(vid_path), "results/SpaTrackV2", video_name)
     print(f"Output directory: {out_dir}")
-    
+
     os.makedirs(out_dir, exist_ok=True)
 
     mask_dir = os.path.join(os.path.dirname(vid_path), f"{video_name}.png")
@@ -132,6 +132,7 @@ if __name__ == "__main__":
                 unc_metric = None
             elif args.data_type == "RGB":
                 # Se args.data_dir è una cartella, carica immagini; se è un file, carica video
+                print(vid_path)
                 if os.path.isdir(vid_path):
                     video_tensor = load_frames(vid_path)
                     video_tensor = video_tensor[::fps_try].float()
