@@ -40,7 +40,7 @@ echo "Activated Python venv: $(which python)"
 
 # Execute
 
-exclude_list=("occlusione_lenta" "occlusione_veloce" "panoramico" "passante_occl_totale" "piccioni_dinamico" "piccioni_occlusione" "rigore" "sedia_1" "sedia_2")
+exclude_list=("video1" "video2" "video3")  # Add video names (without extension) to exclude
 
 cd /cluster/scratch/niacobone/SpaTrackerV2
 echo "Starting SpaTrackerV2 inference..."
