@@ -31,7 +31,7 @@ echo "=== Job starting on $(hostname) at $(date) ==="
 # DATE_VAR=$(date +%Y%m%d%H%M%S)
 
 # Load modules.
-module load stack/2024-06 python/3.11
+module load stack/2024-06 python/3.11 eth_proxy
 echo "Loaded modules: $(module list 2>&1)"
 
 # Activate virtual environment for SpatialTrackerV2.
