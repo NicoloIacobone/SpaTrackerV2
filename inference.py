@@ -132,7 +132,7 @@ if __name__ == "__main__":
                 unc_metric = None
             elif args.data_type == "RGB":
                 # Se args.data_dir è una cartella, carica immagini; se è un file, carica video
-                print(vid_path)
+                # print(vid_path)
                 if os.path.isdir(vid_path):
                     video_tensor = load_frames(vid_path)
                     video_tensor = video_tensor[::fps_try].float()

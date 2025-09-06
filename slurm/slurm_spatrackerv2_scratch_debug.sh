@@ -13,16 +13,16 @@
 #SBATCH --open-mode=append
 #
 # Specify time limit.
-#SBATCH --time=00:5:00
+#SBATCH --time=00:05:00
 #
 # Specify number of tasks.
 #SBATCH --ntasks=1
 #
 # Specify number of CPU cores per task.
-#SBATCH --cpus-per-task=4
+#SBATCH --cpus-per-task=1
 #
 # Specify memory limit per CPU core.
-#SBATCH --mem-per-cpu=32768
+#SBATCH --mem-per-cpu=8192
 #
 # Specify number of required GPUs.
 #SBATCH --gpus=rtx_4090:1
@@ -44,7 +44,7 @@ exclude_list=("video1" "video2" "video3")  # Add video names (without extension)
 
 cd /cluster/scratch/niacobone/SpaTrackerV2
 echo "Starting SpaTrackerV2 inference..."
-video="/cluster/work/igp_psr/niacobone/examples/edge_case/video1"
+video="/cluster/work/igp_psr/niacobone/examples/kubric/bouncing_balls"
 video_name=$(basename "$video" .mp4)
 echo "Processing video: $video_name"
 python inference.py --video_name="$video_name"
