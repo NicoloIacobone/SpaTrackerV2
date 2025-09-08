@@ -40,15 +40,17 @@ echo "Activated Python venv: $(which python)"
 
 # Execute
 
-exclude_list=("video1" "video2" "video3")  # Add video names (without extension) to exclude
+include_list=("video_01_static_short" "video_02_static_medium" "video_03_static_long", "video_04_static_long")  # Inserisci qui i nomi dei video (senza estensione)
 
 cd /cluster/scratch/niacobone/SpaTrackerV2
 echo "Starting SpaTrackerV2 inference..."
-video="/cluster/work/igp_psr/niacobone/examples/kubric/bouncing_balls"
-video_name=$(basename "$video" .mp4)
-echo "Processing video: $video_name"
-python inference.py --video_name="$video_name"
 echo "----------------------------------"
+
+for video_name in "${include_list[@]}"; do
+    echo "Processing video: $video_name"
+    python inference.py --video_name="$video_name"
+    echo "----------------------------------"
+done
 
 echo "=== Job finished at $(date) ==="
 start_time=${SLURM_JOB_START_TIME:-$(date +%s)}

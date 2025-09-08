@@ -44,6 +44,7 @@ exclude_list=("video1" "video2" "video3")  # Add video names (without extension)
 
 cd /cluster/scratch/niacobone/SpaTrackerV2
 echo "Starting SpaTrackerV2 inference..."
+echo "----------------------------------"
 for video in /cluster/work/igp_psr/niacobone/examples/edge_case/*.mp4; do
     video_name=$(basename "$video" .mp4)
     skip=false
