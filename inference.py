@@ -26,7 +26,10 @@ print("Libraries loaded.")
 
 def load_frames(image_folder):
     """Carica tutte le immagini RGB in una cartella e restituisce un tensore torch (T, C, H, W) float32."""
-    frame_files = sorted([f for f in os.listdir(image_folder) if f.lower().endswith(('.png', '.jpg', '.jpeg'))])
+    frame_files = sorted([
+        f for f in os.listdir(image_folder)
+        if f.lower().endswith(('.png', '.jpg', '.jpeg')) and not f.startswith("segmentation_")
+    ])
     frames = []
     for filename in frame_files:
         file_path = os.path.join(image_folder, filename)
@@ -47,7 +50,7 @@ def parse_args():
     parser.add_argument("--data_type", type=str, default="RGB")
     parser.add_argument("--data_dir", type=str, default="/cluster/work/igp_psr/niacobone/examples/kubric")
     parser.add_argument("--video_name", type=str, default="mari")
-    parser.add_argument("--grid_size", type=int, default=10)
+    parser.add_argument("--grid_size", type=int, default=25)
     parser.add_argument("--vo_points", type=int, default=756)
     parser.add_argument("--fps", type=int, default=1)
     return parser.parse_args()
@@ -112,7 +115,7 @@ if __name__ == "__main__":
 
     os.makedirs(out_dir, exist_ok=True)
 
-    mask_dir = os.path.join(os.path.dirname(vid_path), f"{video_name}.png")
+    mask_dir = os.path.join(os.path.dirname(vid_path), f"segmentation_00000.png")
 
     fps_try = fps
     while True:
