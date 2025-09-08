@@ -40,7 +40,7 @@ echo "Activated Python venv: $(which python)"
 
 # Execute
 
-include_list=("video_01_static_short" "video_02_static_medium" "video_03_static_long", "video_04_static_long")  # Inserisci qui i nomi dei video (senza estensione)
+include_list=("video_03_static_long")  # Inserisci qui i nomi dei video (senza estensione)
 
 cd /cluster/scratch/niacobone/SpaTrackerV2
 echo "Starting SpaTrackerV2 inference..."
