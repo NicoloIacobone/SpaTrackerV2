@@ -13,7 +13,7 @@
 #SBATCH --open-mode=append
 #
 # Specify time limit.
-#SBATCH --time=00:05:00
+#SBATCH --time=00:20:00
 #
 # Specify number of tasks.
 #SBATCH --ntasks=1
@@ -25,7 +25,8 @@
 #SBATCH --mem-per-cpu=8192
 #
 # Specify number of required GPUs.
-#SBATCH --gpus=a100:1
+#SBATCH --gpus=rtx_4090:1
+# #SBATCH --gpus=a100:1
 
 echo "=== Job starting on $(hostname) at $(date) ==="
 # DATE_VAR=$(date +%Y%m%d%H%M%S)
@@ -40,7 +41,7 @@ echo "Activated Python venv: $(which python)"
 
 # Execute
 
-include_list=("video_03_static_long")  # Inserisci qui i nomi dei video (senza estensione)
+include_list=("test_0", "test_1", "test_2", "video_01_static_short", "video_02_static_medium", "video_03_static_long", "video_04_static_long")  # Inserisci qui i nomi dei video (senza estensione)
 
 cd /cluster/scratch/niacobone/SpaTrackerV2
 echo "Starting SpaTrackerV2 inference..."
