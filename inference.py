@@ -115,7 +115,7 @@ if __name__ == "__main__":
 
     os.makedirs(out_dir, exist_ok=True)
 
-    mask_dir = os.path.join(os.path.dirname(vid_path), f"segmentation_00000.png")
+    mask_dir = os.path.join(vid_path, "segmentation_00000.png")
 
     fps_try = fps
     while True:
