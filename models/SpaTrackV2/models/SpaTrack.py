@@ -481,12 +481,12 @@ class SpaTrack2(nn.Module, PyTorchModelHubMixin):
                 )
                 mask_roi = (metric_depth > _depth_roi[0]) & (metric_depth < _depth_roi[1])
                 mask = mask * mask_roi
-                mask = mask * (~(utils3d.torch.depth_edge(metric_depth, rtol=0.03, mask=mask.bool()))) * normals_mask[:,None,...]
+                mask = mask * (~(utils3d.torch.depth_map_edge(metric_depth, rtol=0.03, mask=mask.bool()))) * normals_mask[:,None,...]
                 points_map = depth_to_points_colmap(metric_depth.squeeze(1), intrs.view(B*T_new, 3, 3))
                 unc_metric = torch.cat(unc_metric, dim=0).view(B*T_new, 1, H_resize, W_resize).to(x.dtype)
                 unc_metric *= mask
                 if full_point:
-                    unc_metric = (~(utils3d.torch.depth_edge(metric_depth, rtol=0.1, mask=torch.ones_like(metric_depth).bool()))).float() * (metric_depth != 0)
+                    unc_metric = (~(utils3d.torch.depth_map_edge(metric_depth, rtol=0.1, mask=torch.ones_like(metric_depth).bool()))).float() * (metric_depth != 0)
                 if cache is not None:
                     assert B==1, "only support batch size 1 right now."
                     unc_metric = torch.cat([cache["unc_metric"], unc_metric], dim=0)
@@ -531,7 +531,7 @@ class SpaTrack2(nn.Module, PyTorchModelHubMixin):
                     metric_depth_gt[metric_depth_gt > 10*q25] = 0
                 else:
                     unc_metric = ((metric_depth_gt > 0)*(mask_roi)).float()
-                    unc_metric *= (~(utils3d.torch.depth_edge(metric_depth_gt, rtol=0.03, mask=mask_roi.bool()))).float()
+                    unc_metric *= (~(utils3d.torch.depth_map_edge(metric_depth_gt, rtol=0.03, mask=mask_roi.bool()))).float()
                     # filter the sky
                     metric_depth_gt[metric_depth_gt > 10*q25] = 0
                 if "unc_metric" in annots.keys():
