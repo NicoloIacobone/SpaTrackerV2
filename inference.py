@@ -115,7 +115,7 @@ if __name__ == "__main__":
 
     os.makedirs(out_dir, exist_ok=True)
 
-    mask_dir = os.path.join(vid_path, "segmentation_00000.png")
+    mask_dir = os.path.join(vid_path, "gt_masks/segmentation_00000.png") # folder that contains the GT masks, the one of the first frame is used as query mask
 
     fps_try = fps
     while True:
@@ -135,9 +135,9 @@ if __name__ == "__main__":
                 unc_metric = None
             elif args.data_type == "RGB":
                 # Se args.data_dir è una cartella, carica immagini; se è un file, carica video
-                # print(vid_path)
                 if os.path.isdir(vid_path):
-                    video_tensor = load_frames(vid_path)
+                    frames_path = os.path.join(vid_path, "frames")
+                    video_tensor = load_frames(frames_path)
                     video_tensor = video_tensor[::fps_try].float()
                     video_tensor = preprocess_image(video_tensor)[None]
                 else:
