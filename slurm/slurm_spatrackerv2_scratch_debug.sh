@@ -40,8 +40,8 @@ source /cluster/scratch/niacobone/SpaTrackerV2/myenv/bin/activate
 echo "Activated Python venv: $(which python)"
 
 # Execute
-include_list=("video_01_static_short")
-# include_list=("video_01_static_short" "video_02_static_medium" "video_03_static_long" "video_04_static_long" "video_05_dynamic_short" "video_06_dynamic_medium" "video_07_dynamic_occlusion_short" "video_08_dynamic_occlusion_medium" "video_09_dynamic_occlusion_long" "video_10_more_dynamic_short" "video_11_more_dynamic_medium" "video_13_static_short" "video_14_static_medium" "video_15_static_long" "video_16_static_long" "video_17_dynamic_short" "video_18_dynamic_medium" "video_19_dynamic_occlusion_short" "video_20_dynamic_occlusion_medium" "video_21_dynamic_occlusion_long" "video_22_more_dynamic_short" "video_23_more_dynamic_medium" "video_24_more_dynamic_long") # directory da includere
+# include_list=("video_01_static_short")
+include_list=("video_01_static_short" "video_02_static_medium" "video_03_static_long" "video_04_static_long" "video_05_dynamic_short" "video_06_dynamic_medium" "video_07_dynamic_occlusion_short" "video_08_dynamic_occlusion_medium" "video_09_dynamic_occlusion_long" "video_10_more_dynamic_short" "video_11_more_dynamic_medium" "video_13_static_short" "video_14_static_medium" "video_15_static_long" "video_16_static_long" "video_17_dynamic_short" "video_18_dynamic_medium" "video_19_dynamic_occlusion_short" "video_20_dynamic_occlusion_medium" "video_21_dynamic_occlusion_long" "video_22_more_dynamic_short" "video_23_more_dynamic_medium" "video_24_more_dynamic_long") # directory da includere
 
 cd /cluster/scratch/niacobone/SpaTrackerV2
 echo "Starting SpaTrackerV2 inference..."
