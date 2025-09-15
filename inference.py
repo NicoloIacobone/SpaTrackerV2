@@ -227,6 +227,9 @@ if __name__ == "__main__":
                 data_npz_load["unc_metric"] = conf_depth.cpu().numpy()
                 np.savez(os.path.join(out_dir, f'result.npz'), **data_npz_load)
 
+                # Save the track2d_pred variable to a new .npz file
+                np.savez(os.path.join(out_dir, 'track2d_pred.npz'), track2d_pred=track2d_pred.cpu().numpy())
+
                 print(f"Results saved to {out_dir}.\nTo visualize them with tapip3d, run: [bold yellow]python tapip3d_viz.py {out_dir}/result.npz[/bold yellow]")
 
                 gc.collect()

@@ -13,25 +13,26 @@
 #SBATCH --open-mode=append
 #
 # Specify time limit.
-#SBATCH --time=00:30:00
+#SBATCH --time=01:00:00
 #
 # Specify number of tasks.
 #SBATCH --ntasks=1
 #
 # Specify number of CPU cores per task.
-#SBATCH --cpus-per-task=4
+#SBATCH --cpus-per-task=1
 #
 # Specify memory limit per CPU core.
-#SBATCH --mem-per-cpu=32768
+#SBATCH --mem-per-cpu=8192
 #
 # Specify number of required GPUs.
-#SBATCH --gpus=rtx_4090:2
+#SBATCH --gpus=rtx_4090:1
+# #SBATCH --gpus=a100:1
 
 echo "=== Job starting on $(hostname) at $(date) ==="
 # DATE_VAR=$(date +%Y%m%d%H%M%S)
 
 # Load modules.
-module load stack/2024-06 python/3.11
+module load stack/2024-06 python/3.11 eth_proxy
 echo "Loaded modules: $(module list 2>&1)"
 
 # Activate virtual environment for SpatialTrackerV2.
@@ -39,25 +40,14 @@ source /cluster/scratch/niacobone/SpaTrackerV2/myenv/bin/activate
 echo "Activated Python venv: $(which python)"
 
 # Execute
-
-exclude_list=("video1" "video2" "video3")  # Add video names (without extension) to exclude
+# include_list=("video_01_static_short")
+include_list=("video_01_static_short" "video_02_static_medium" "video_03_static_long" "video_04_static_long" "video_05_dynamic_short" "video_06_dynamic_medium" "video_07_dynamic_occlusion_short" "video_08_dynamic_occlusion_medium" "video_09_dynamic_occlusion_long" "video_10_more_dynamic_short" "video_11_more_dynamic_medium" "video_13_static_short" "video_14_static_medium" "video_15_static_long" "video_16_static_long" "video_17_dynamic_short" "video_18_dynamic_medium" "video_19_dynamic_occlusion_short" "video_20_dynamic_occlusion_medium" "video_21_dynamic_occlusion_long" "video_22_more_dynamic_short" "video_23_more_dynamic_medium" "video_24_more_dynamic_long") # directory da includere
 
 cd /cluster/scratch/niacobone/SpaTrackerV2
 echo "Starting SpaTrackerV2 inference..."
 echo "----------------------------------"
-for video in /cluster/work/igp_psr/niacobone/examples/edge_case/*.mp4; do
-    video_name=$(basename "$video" .mp4)
-    skip=false
-    for exclude in "${exclude_list[@]}"; do
-        if [[ "$video_name" == "$exclude" ]]; then
-            skip=true
-            break
-        fi
-    done
-    if [ "$skip" = true ]; then
-        echo "Skipping excluded video: $video_name"
-        continue
-    fi
+
+for video_name in "${include_list[@]}"; do
     echo "Processing video: $video_name"
     python inference.py --video_name="$video_name"
     echo "----------------------------------"
